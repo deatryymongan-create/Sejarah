@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Edutech – Log in</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Poppins:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#150a2e; --muted:#8a8590; --line:#bdb8c0; --accent:#e9a3b8;
+  --bg:#fbeeee; --card:#fffdfd; --err:#b3254a; --welcome:#5a3a14;
+  --p1:#f8d7e6; --p2:#fdaaf0;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){--ink:#f3e9f7;--muted:#a79fb0;--line:#5b5266;--bg:#1d1424;--card:#271b30;--welcome:#ffe9c9;--err:#ff7b9c}
+}
+:root[data-theme="dark"]{--ink:#f3e9f7;--muted:#a79fb0;--line:#5b5266;--bg:#1d1424;--card:#271b30;--welcome:#ffe9c9;--err:#ff7b9c}
+*,*::before,*::after{box-sizing:inherit}
+html,body{height:100%;margin:0}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{background:var(--bg);color:var(--ink);font-family:Poppins,system-ui,sans-serif;font-size:14px;
+  background-image:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 41%,transparent 55%),linear-gradient(65deg,transparent 60%,rgba(255,255,255,.25) 61%,transparent 75%);}
+.page{min-height:100%;display:flex;flex-direction:column;padding:32px clamp(20px,6vw,80px)}
+.brand{font-family:"Cormorant Garamond",Georgia,serif;font-size:38px;font-weight:500;letter-spacing:.01em;margin:0 0 clamp(16px,4vh,48px)}
+.card{width:100%;max-width:894px;margin:0 auto auto;background:var(--card);box-shadow:0 20px 60px rgba(70,30,70,.18);
+  display:grid;grid-template-columns:1fr 1fr;min-height:502px;padding:9px;gap:0}
+.art{position:relative;overflow:hidden;background:linear-gradient(150deg,var(--p1),var(--p2))}
+.art svg{position:absolute;width:75%;height:auto}
+.form{padding:48px 64px 40px 71px;display:flex;flex-direction:column;justify-content:center}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:46px;line-height:1;margin:0 0 40px}
+.field{position:relative;margin-bottom:22px}
+.field label{display:block;font-size:12px;margin-bottom:2px}
+.field input{width:100%;border:0;border-bottom:1.5px solid var(--line);background:transparent;color:var(--ink);
+  font:inherit;font-size:13px;padding:10px 28px 8px 28px;outline:0;border-radius:0}
+.field.plain input{padding-left:0}
+.field input::placeholder{color:var(--muted)}
+.field input:focus{border-bottom-color:var(--ink)}
+.field input:focus-visible{box-shadow:0 2px 0 var(--ink)}
+.ico{position:absolute;left:0;bottom:9px;width:15px;height:15px;color:var(--accent);pointer-events:none}
+.eye{position:absolute;right:0;bottom:6px;border:0;background:none;color:var(--muted);cursor:pointer;padding:4px;display:grid}
+.eye:focus-visible,.link:focus-visible,button.main:focus-visible,.chk input:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.eye svg{width:16px;height:16px}
+.row{display:flex;justify-content:space-between;align-items:center;font-style:italic;color:var(--muted);font-size:12px;margin:-8px 0 22px}
+.chk{display:flex;align-items:center;gap:14px;cursor:pointer}
+.chk input{width:11px;height:11px;margin:0;accent-color:var(--ink)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}
+button.main{width:100%;border:0;background:#150a2e;color:#fff;font:inherit;font-size:14px;padding:12px;cursor:pointer;margin-top:4px}
+button.main:hover{background:#2b1a52}
+.link{background:none;border:0;padding:0;font:inherit;font-size:12px;color:var(--ink);cursor:pointer;margin-top:14px;text-align:left}
+.link:hover{text-decoration:underline}
+.err{color:var(--err);font-size:12px;min-height:16px;margin:-6px 0 6px}
+.view[hidden]{display:none}
+/* welcome */
+.welcome{grid-column:1/-1;padding:0;min-height:502px;position:relative;overflow:hidden;background:linear-gradient(150deg,var(--p1),var(--p2));display:flex;align-items:center}
+.welcome svg{position:absolute;height:auto}
+.welcome .txt{position:relative;z-index:2;margin-left:clamp(24px,23%,210px);font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(26px,3.6vw,36px);line-height:1.3;color:#5a3a14}
+.welcome button{position:relative;z-index:2}
+.out{margin-top:18px;font-family:Poppins,sans-serif;font-size:12px;background:none;border:1px solid #5a3a14;color:#5a3a14;padding:8px 18px;cursor:pointer}
+.start{display:inline-block;background:#150a2e;color:#fff;border:0;cursor:pointer;font-family:Poppins,sans-serif;font-size:13px;padding:10px 22px;margin:14px 8px 0 0}
+.start:focus-visible{outline:2px solid #5a3a14;outline-offset:2px}
+.materi{grid-column:1/-1;padding:32px 40px 28px}
+.materi h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:38px;margin:0 0 4px}
+.materi .sub{color:var(--muted);margin:0 0 22px;font-size:13px}
+.list{list-style:none;margin:0 0 18px;padding:0;display:grid;gap:12px}
+.gh{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:22px;margin:18px 0 10px}
+.item{display:flex;align-items:center;gap:16px;padding:14px 16px;border:1px solid var(--line);color:var(--ink);text-decoration:none;background:var(--card)}
+.item:hover{border-color:var(--ink);box-shadow:0 6px 18px rgba(70,30,70,.12)}
+.item:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.tag{flex:none;font-size:11px;padding:4px 10px;background:linear-gradient(150deg,var(--p1),var(--p2));color:#150a2e}
+.item b{font-weight:500;display:block}
+.item small{color:var(--muted);font-size:12px}
+.arrow{margin-left:auto;color:var(--muted)}
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;margin:0 0 clamp(16px,4vh,40px)}
+.top .brand{margin:0}
+.brand a{color:inherit;text-decoration:none}
+.nav{display:flex;gap:6px;flex-wrap:wrap}
+.nav a,.nav button{font:inherit;font-size:13px;color:var(--ink);background:transparent;border:1px solid transparent;padding:8px 14px;cursor:pointer;text-decoration:none}
+.nav a:hover,.nav button:hover{border-color:var(--ink)}
+.nav a[aria-current="page"]{background:#150a2e;color:#fff;border-color:#150a2e}
+.nav a:focus-visible,.nav button:focus-visible,.brand a:focus-visible,.crumb a:focus-visible,.tutbtn:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.crumb{font-size:12px;color:var(--muted);margin:0 0 10px}.crumb a{color:inherit}
+h2:focus{outline:none}
+.out{margin-right:8px}
+.tut{grid-column:1/-1;padding:32px 40px 28px}
+.tut h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:400;font-size:38px;margin:0 0 4px}
+.tut .sub{color:var(--muted);margin:0 0 20px;font-size:13px}
+.steps{counter-reset:s;list-style:none;padding:0;margin:0 0 16px;display:grid;gap:12px}
+.steps li{counter-increment:s;display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line)}
+.steps li::before{content:counter(s);flex:none;width:28px;height:28px;border-radius:50%;background:#150a2e;color:#fff;display:grid;place-items:center;font-size:13px}
+.steps b{display:block;font-weight:500}.steps small{color:var(--muted);font-size:13px;display:block}
+.tip{border-left:3px solid var(--p2);background:rgba(253,170,240,.14);padding:12px 14px;margin:0 0 12px;font-size:13px}
+.tutbtn{display:inline-block;background:#150a2e;color:#fff;text-decoration:none;padding:10px 22px;font-size:13px;margin:6px 10px 0 0}
+.tutbtn.alt{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.nav[hidden]{display:none}
+.kb{position:relative;display:inline-block}
+.kb summary{list-style:none;cursor:pointer;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 16px;font-size:13px}
+.kb summary::-webkit-details-marker{display:none}
+.kb[open] summary,.kb summary:hover{border-color:var(--ink)}
+.kb summary:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.kb ul{list-style:none;margin:0;padding:6px;position:absolute;left:0;top:calc(100% + 6px);min-width:200px;z-index:20;background:var(--card);border:1px solid var(--line);box-shadow:0 10px 30px rgba(70,30,70,.18)}
+.kb li.h{font-size:11px;color:var(--muted);padding:6px 12px 4px}
+.kb a{display:block;padding:8px 12px;color:var(--ink);text-decoration:none;font-size:13px}
+.kb a:hover,.kb a:focus-visible{background:rgba(253,170,240,.25);outline:none}
+@media (max-width:760px){
+  .tut{padding:24px 18px}.tut h2{font-size:32px}
+  .materi{padding:24px 18px}.materi h2{font-size:32px}
+  .card{grid-template-columns:1fr;min-height:0}
+  .art{height:150px;order:-1}
+  .form{padding:32px 24px}
+  h1{font-size:40px;margin-bottom:28px}
+  .two{grid-template-columns:1fr}
+  .welcome .txt{margin-left:24px}
+}
+@media (prefers-reduced-motion:no-preference){.view{animation:in .35s ease}@keyframes in{from{opacity:0}to{opacity:1}}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <radialGradient id="g" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".65" stop-color="#fdeff3"/><stop offset="1" stop-color="#f1b4c8"/></radialGradient>
+    <symbol id="cloud" viewBox="0 0 300 190">
+      <g fill="url(#g)"><circle cx="70" cy="125" r="60"/><circle cx="130" cy="80" r="75"/><circle cx="200" cy="100" r="60"/><circle cx="250" cy="130" r="45"/><rect x="40" y="120" width="230" height="55" rx="27"/></g>
+    </symbol>
+  </defs>
+</svg>
+
+<main class="page">
+  <header class="top">
+    <p class="brand"><a href="#beranda">Edutech.</a></p>
+    <nav class="nav" aria-label="Navigasi utama">
+      <a href="#beranda" data-nav="welcome">Beranda</a>
+      <a href="#tutorial" data-nav="tutorial">Tutorial</a>
+      <a href="#materi" data-nav="materi">Materi</a>
+      <a href="#latihan" data-nav="latihan">Latihan, Simulasi &amp; Game</a>
+      <button type="button" id="nav-out" hidden>Keluar</button>
+    </nav>
+  </header>
+
+  <div class="card" id="card">
+    <!-- LOG IN -->
+    <section class="view form" id="v-login" aria-labelledby="t-login">
+      <h1 id="t-login">log in</h1>
+      <form id="f-login" novalidate>
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="8" r="4.5"/><path d="M3.5 21c0-5 4-7 8.500-7s8.500 2 8.500 7z"/></svg>
+          <input id="l-user" type="text" placeholder="Username" autocomplete="username" aria-label="Username" required>
+        </div>
+        <div class="field">
+          <svg class="ico" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2.500"/><path d="M7.500 10V7a4.500 4.500 0 019 0v3" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+          <input id="l-pass" type="password" placeholder="Password" autocomplete="current-password" aria-label="Password" required>
+          <button type="button" class="eye" data-eye="l-pass" aria-label="Tampilkan password"></button>
+        </div>
+        <div class="row">
+          <label class="chk"><input type="checkbox" id="remember"> Remember Me</label>
+          <a class="link" style="margin:0;font-style:italic;color:var(--muted)" href="#" id="forgot">Forgot Password?</a>
+        </div>
+        <div class="err" id="e-login" role="alert"></div>
+        <button class="main" type="submit">Log in</button>
+      </form>
+      <button class="link" data-go="signup">or Sign up</button>
+    </section>
+
+    <!-- SIGN UP -->
+    <section class="view form" id="v-signup" aria-labelledby="t-signup" hidden>
+      <h1 id="t-signup">Sign up</h1>
+      <form id="f-signup" novalidate>
+        <div class="field plain"><label for="s-name">Full Name</label><input id="s-name" type="text" autocomplete="name" required></div>
+        <div class="field plain"><label for="s-mail">Email Address</label><input id="s-mail" type="email" autocomplete="email" required></div>
+        <div class="two">
+          <div class="field plain"><label for="s-pass">Password</label><input id="s-pass" type="password" autocomplete="new-password" required><button type="button" class="eye" data-eye="s-pass" aria-label="Tampilkan password"></button></div>
+          <div class="field plain"><label for="s-pass2">Confirm Password</label><input id="s-pass2" type="password" autocomplete="new-password" required><button type="button" class="eye" data-eye="s-pass2" aria-label="Tampilkan konfirmasi password"></button></div>
+        </div>
+        <div class="err" id="e-signup" role="alert"></div>
+        <button class="main" type="submit">Create Account</button>
+      </form>
+      <button class="link" data-go="login">or Log in</button>
+    </section>
+
+    <!-- ART PANEL (login & signup) -->
+    <div class="art" id="art" aria-hidden="true">
+      <svg style="right:-6%;top:-3%;width:82%"><use href="#cloud"/></svg>
+      <svg style="left:-14%;top:30%;width:56%"><use href="#cloud"/></svg>
+      <svg style="right:-10%;bottom:-12%;width:80%"><use href="#cloud"/></svg>
+    </div>
+
+    <!-- WELCOME -->
+    <section class="view welcome" id="v-welcome" hidden aria-live="polite">
+      <svg style="left:-4%;bottom:-18%;width:44%"><use href="#cloud"/></svg>
+      <svg style="left:32%;top:-22%;width:36%"><use href="#cloud"/></svg>
+      <svg style="right:-6%;top:30%;width:26%"><use href="#cloud"/></svg>
+      <div class="txt"><span id="hi">Hi, Learner</span><br>Selamat datang di Edutech<br><button class="start" id="start">Mulai belajar</button><button class="out" id="to-tut">Tutorial</button><button class="out" id="logout">Keluar</button></div>
+    </section>
+
+
+    <!-- MATERI -->
+    <section class="view materi" id="v-materi" hidden aria-labelledby="t-materi">
+      <p class="crumb"><a href="#beranda">Beranda</a> &rsaquo; Materi</p>
+      <h2 id="t-materi" tabindex="-1">Materi</h2>
+      <p class="sub">Pilih materi untuk mulai belajar. Materi dibuka di tab baru.</p>
+      <ul class="list" id="materi-list"></ul>
+      <details class="kb"><summary>&larr; Kembali</summary><ul><li class="h">Mau kembali ke mana?</li><li><a href="#beranda">Beranda</a></li><li><a href="#tutorial">Tutorial</a></li><li><a href="#latihan">Latihan, Simulasi &amp; Game</a></li></ul></details>
+    </section>
+
+    <!-- LATIHAN, SIMULASI & GAME -->
+    <section class="view materi" id="v-latihan" hidden aria-labelledby="t-latihan">
+      <p class="crumb"><a href="#beranda">Beranda</a> &rsaquo; Latihan, Simulasi &amp; Game</p>
+      <h2 id="t-latihan" tabindex="-1">Latihan, Simulasi &amp; Game</h2>
+      <p class="sub">Uji pemahaman lewat soal, simulasi, dan game. Dibuka di tab baru.</p>
+      <ul class="list" id="latihan-list"></ul>
+      <details class="kb"><summary>&larr; Kembali</summary><ul><li class="h">Mau kembali ke mana?</li><li><a href="#beranda">Beranda</a></li><li><a href="#tutorial">Tutorial</a></li><li><a href="#materi">Materi</a></li></ul></details>
+    </section>
+
+    <!-- TUTORIAL -->
+    <section class="view tut" id="v-tutorial" hidden aria-labelledby="t-tut">
+      <p class="crumb"><a href="#beranda">Beranda</a> &rsaquo; Tutorial</p>
+      <h2 id="t-tut" tabindex="-1">Tutorial: Cara Memakai Edutech</h2>
+      <p class="sub">Ikuti langkah berikut dari awal sampai selesai belajar.</p>
+      <ol class="steps">
+        <li><span><b>Daftar atau masuk</b><small>Buat akun lewat &ldquo;Sign up&rdquo;, lalu masuk lewat &ldquo;Log in&rdquo;. Setelah berhasil, Anda tiba di Beranda.</small></span></li>
+        <li><span><b>Mulai dari Beranda</b><small>Klik &ldquo;Mulai belajar&rdquo; untuk membuka daftar materi, atau &ldquo;Tutorial&rdquo; untuk membuka halaman ini lagi.</small></span></li>
+        <li><span><b>Pelajari Materi</b><small>Buka <em>Slide</em> untuk membaca ringkasan (gunakan tombol panah) dan <em>Video</em> untuk menonton penjelasannya.</small></span></li>
+        <li><span><b>Kerjakan Latihan, Simulasi &amp; Game</b><small>Buka menu &ldquo;Latihan, Simulasi &amp; Game&rdquo;. Ada Soal, Latihan 1 dan 2, Simulasi pergerakan nasional, dan Game Pecah Balon. Ikuti petunjuk di halaman masing-masing.</small></span></li>
+        <li><span><b>Kembali kapan saja</b><small>Menu di bagian atas (Beranda, Tutorial, Materi, Latihan, Simulasi &amp; Game) selalu tersedia. Klik logo &ldquo;Edutech.&rdquo; untuk kembali ke Beranda. Materi dibuka di tab baru: tutup tab itu, atau pakai tombol Beranda dan Materi di bagian atas halamannya.</small></span></li>
+        <li><span><b>Keluar</b><small>Klik &ldquo;Keluar&rdquo; di menu atas setelah selesai belajar.</small></span></li>
+      </ol>
+      <p class="tip"><b>Tips:</b> di halaman Slide, gunakan tombol panah kiri/kanan di keyboard. Pada slide 2 (Peta Materi), klik kotak materi untuk langsung loncat ke slide-nya.</p>
+      <a class="tutbtn" href="#materi">Buka Materi &rarr;</a><details class="kb"><summary>&larr; Kembali</summary><ul><li class="h">Mau kembali ke mana?</li><li><a href="#beranda">Beranda</a></li><li><a href="#materi">Materi</a></li><li><a href="#latihan">Latihan, Simulasi &amp; Game</a></li></ul></details>
+    </section>
+  </div>
+</main>
+
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const eyeOn='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const eyeOff='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><path d="M3 3l18 18"/></svg>';
+$$('.eye').forEach(b=>{b.innerHTML=eyeOff;b.onclick=()=>{
+  const i=$('#'+b.dataset.eye),show=i.type==='password';i.type=show?'text':'password';
+  b.innerHTML=show?eyeOn:eyeOff;b.setAttribute('aria-pressed',show);};});
+
+const KEY='edutech.user';
+let USER=null;
+function getUser(){if(USER)return USER;try{USER=localStorage.getItem(KEY)||null}catch(e){}return USER}
+function setUser(n){USER=n;try{localStorage.setItem(KEY,n)}catch(e){}}
+function clearUser(){USER=null;try{localStorage.removeItem(KEY)}catch(e){}}
+const ROUTES={masuk:'login',daftar:'signup',beranda:'welcome',materi:'materi',latihan:'latihan',tutorial:'tutorial'};
+const NAMES={login:'Log in',signup:'Sign up',welcome:'Selamat datang',materi:'Materi',latihan:'Latihan, Simulasi & Game',tutorial:'Tutorial'};
+function show(name){
+  Object.values(ROUTES).forEach(n=>$('#v-'+n).hidden=n!==name);
+  $('#art').hidden=!(name==='login'||name==='signup');
+  document.title='Edutech \u2013 '+NAMES[name];
+  $$('[data-nav]').forEach(a=>{if(a.dataset.nav===name)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current')});
+  $('#nav-out').hidden=!getUser();
+  $('.nav').hidden=(name==='login'||name==='signup');
+  $$('details.kb').forEach(d=>d.open=false);
+  const f=$('#v-'+name).querySelector('input,button.start,h2');if(f)f.focus({preventScroll:true});
+}
+function go(h){if(location.hash==='#'+h)route();else location.hash=h}
+function route(){
+  const user=getUser();let v=ROUTES[location.hash.slice(1)],note='';
+  if(!v)v=user?'welcome':'login';
+  if(!user&&(v==='welcome'||v==='materi'||v==='latihan')){v='login';note='Masuk dulu untuk membuka Beranda, Materi, dan Latihan.'}
+  if(user&&(v==='login'||v==='signup'))v='welcome';
+  if(v==='welcome'){const first=user.trim().split(/\s+/)[0];$('#hi').textContent='Hi, '+(first||'Learner')}
+  $('#e-login').textContent=note;
+  show(v);
+}
+addEventListener('hashchange',route);
+addEventListener('keydown',e=>{if(e.key==='Escape')$$('details.kb').forEach(d=>d.open=false)});
+$$('[data-go]').forEach(b=>b.onclick=()=>go(b.dataset.go==='signup'?'daftar':'masuk'));
+
+function welcome(name){setUser((name||'').trim()||'Learner');go('beranda')}
+
+// Demo only: no real backend. Replace with a call to your auth API.
+const users=[]; // {name,email,pass}
+$('#f-login').onsubmit=e=>{
+  e.preventDefault();
+  const u=$('#l-user').value.trim(),p=$('#l-pass').value,er=$('#e-login');
+  if(!u||!p){er.textContent='Isi username dan password.';return;}
+  const m=users.find(x=>(x.email===u.toLowerCase()||x.name===u)&&x.pass===p);
+  if(users.length&&!m){er.textContent='Username atau password salah.';return;}
+  er.textContent=''; welcome(m?m.name:u);
+};
+$('#forgot').onclick=e=>{e.preventDefault();$('#e-login').textContent='Fitur reset password belum terhubung ke server.';};
+$('#f-signup').onsubmit=e=>{
+  e.preventDefault();
+  const n=$('#s-name').value.trim(),m=$('#s-mail').value.trim().toLowerCase(),p=$('#s-pass').value,p2=$('#s-pass2').value,er=$('#e-signup');
+  if(!n||!m||!p){er.textContent='Lengkapi semua kolom.';return;}
+  if(!/^\S+@\S+\.\S+$/.test(m)){er.textContent='Format email belum benar.';return;}
+  if(p.length<8){er.textContent='Password minimal 8 karakter.';return;}
+  if(p!==p2){er.textContent='Konfirmasi password tidak sama.';return;}
+  users.push({name:n,email:m,pass:p}); er.textContent=''; welcome(n);
+};
+// Tambah materi baru cukup dengan menambah satu baris di sini.
+const MATERI=[
+  ['Materi',[
+    {type:'Slide',title:'Masa Penjajahan di Indonesia',desc:'Dari kedatangan bangsa Barat hingga kemerdekaan · 15 slide',url:'https://claude.ai/artifact/C9pePZBFeavu6tpyoZf3yo'},
+    {type:'Video',title:'Dari Masa Kolonial hingga Tumbuhnya Nasionalisme',desc:'IPS SMP kelas 8 · Kejarcita',url:'https://youtu.be/G4W_1Xt8ibI?si=fXSRlrJx151j0pK3'}
+  ]],
+  ['Latihan, Simulasi & Game',[
+    {type:'Soal',title:'Soal',desc:'Soal interaktif (H5P)',url:'https://deatryymongan2806070897.h5p.com/content/1293039428598110587'},
+    {type:'Latihan',title:'Latihan 1',desc:'Kuis Wayground',url:'https://wayground.com/join?gc=02232419'},
+    {type:'Latihan',title:'Latihan 2',desc:'Kuis Wayground',url:'https://wayground.com/join?gc=42340451&autostart=true'},
+    {type:'Simulasi',title:'Simulasi: Jadi Pemimpin Pergerakan',desc:'Ambil keputusan dan lihat dampaknya pada pergerakan nasional',url:'https://claude.ai/artifact/T96NdcKXLbZ4KQt4gn4dZz#simulasi'},
+    {type:'Game',title:'Game: Sejarah Indonesia',desc:'Pecah Balon (Wordwall)',url:'https://wordwall.net/id/resource/122864410?wwmethod=link'}
+  ]]
+];
+const esc=t=>t.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const card=m=>`<li><a class="item" href="${esc(m.url)}" target="_blank" rel="noopener"><span class="tag">${m.type}</span><span><b>${esc(m.title)}</b><small>${esc(m.desc)}</small></span><span class="arrow" aria-hidden="true">&rarr;</span></a></li>`;
+const listHtml=items=>`<ul class="list">${items.map(card).join('')}</ul>`;
+$('#materi-list').outerHTML=listHtml(MATERI[0][1]);
+$('#latihan-list').outerHTML=listHtml(MATERI[1][1]);
+$('#start').onclick=()=>go('materi');
+$('#to-tut').onclick=()=>go('tutorial');
+function logout(){$$('input').forEach(i=>{if(i.type!=='checkbox')i.value=''});clearUser();go('masuk')}
+$('#logout').onclick=logout;$('#nav-out').onclick=logout;
+route();
+</script>
+</body>
+</html>
